@@ -13,20 +13,19 @@ const Board: React.FC = () => {
   const [currentHoveringCol, setCurrentHoveringCol] = useState<number | null>(
     null,
   );
-
-  useEffect(() => {
-    if (turn === "transition") {
-      setTimeout(() => {
-        const movement = Math.floor(Math.random() * 6);
-        placeCircle(movement, true);
-      }, 50);
-    }
-  }, [placeCircle, turn]);
-
   const formatBoard = board.map(n => n.map(b => b.player));
   const isPlayerWon = checkConnectedFour(formatBoard, "player");
   const isOpponentWon = checkConnectedFour(formatBoard, "computer");
   const isGameEnded = isPlayerWon || isOpponentWon;
+
+  useEffect(() => {
+    if (turn === "transition" && !isGameEnded) {
+      setTimeout(() => {
+        const movement = Math.floor(Math.random() * 6);
+        placeCircle(movement, true);
+      }, 300);
+    }
+  }, [isGameEnded, placeCircle, turn]);
 
   return (
     <div className="container mx-auto">
