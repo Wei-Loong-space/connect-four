@@ -28,9 +28,14 @@ const Square: React.FC<SquareProps> = ({
     >
       <div
         className={cn(
+          "w-0 h-0 border-l-[30px] border-l-transparent border-t-[25px] border-t-red-500 border-r-[30px] border-r-transparent hidden self-end",
+          showPlaceholder && "block",
+        )}
+      ></div>
+      <div
+        className={cn(
           "rounded-full bg-white w-16 h-16 flex justify-center items-center ",
-          isPlaceholder && "invisible",
-          showPlaceholder && "visible bg-red-800",
+          isPlaceholder && "hidden",
           fill === "player" && "bg-red-800",
         )}
       >

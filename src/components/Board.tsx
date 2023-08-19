@@ -30,6 +30,7 @@ const Board: React.FC<BoardProps> = () => {
               fill={b.player}
               onClick={() => {
                 placeCircle(b.coordinate.col);
+                () => setCurrentHoveringCol(null);
               }}
               onMouseEnter={() => setCurrentHoveringCol(b.coordinate.col)}
               key={b.coordinate.row.toString() + b.coordinate.col}
