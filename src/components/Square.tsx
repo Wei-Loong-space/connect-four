@@ -5,7 +5,6 @@ interface SquareProps
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
   > {
-  coordinate: string;
   isPlaceholder?: boolean;
   showPlaceholder?: boolean;
   fill?: "player" | "none" | "computer";
@@ -13,7 +12,6 @@ interface SquareProps
 }
 
 const Square: React.FC<SquareProps> = ({
-  coordinate,
   isPlaceholder,
   showPlaceholder,
   isTransitioning,
@@ -42,9 +40,7 @@ const Square: React.FC<SquareProps> = ({
           fill === "player" && "bg-red-800",
           fill === "computer" && "bg-green-800",
         )}
-      >
-        {coordinate}
-      </div>
+      ></div>
     </div>
   );
 };
