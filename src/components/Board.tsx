@@ -1,26 +1,34 @@
+import { useState } from "react";
 import useBoard from "../store";
 import Square from "./Square";
 
-interface BoardProps {
-  // List your props here
-}
-
-const Board: React.FC<BoardProps> = props => {
+const Board: React.FC<BoardProps> = () => {
   const board = useBoard(state => state.board);
 
   const board1D = board.flat();
   const placeholder = [...Array(7).keys()];
-  console.log(placeholder);
+  const [currentHoveringCol, setCurrentHoveringCol] = useState<number | null>(
+    null,
+  );
+  console.log(currentHoveringCol);
   return (
     <div className="container mx-auto">
-      <div className="bg-blue-700 pb-0 pt-10 px-2 w-max m-auto rounded-2xl">
-        <div className="mt-20 grid justify-center grid-cols-[repeat(7,80px)] grid-rows-[repeat(6,72px)] gap-0 ">
-          {placeholder.map((b, i) => (
-            <Square key={i} coordinate={b.toString()} isPlaceholder />
+      <div
+        onMouseLeave={() => setCurrentHoveringCol(null)}
+        className="bg-blue-700 pb-0 pt-2 px-2 w-max m-auto rounded-2xl overflow-auto"
+      >
+        <div className="grid justify-center grid-cols-[repeat(7,80px)] grid-rows-[repeat(6,72px)] gap-0 ">
+          {placeholder.map(colLabel => (
+            <Square
+              key={colLabel}
+              coordinate={colLabel.toString()}
+              isPlaceholder
+              showPlaceholder={currentHoveringCol === colLabel}
+            />
           ))}
           {board1D.map(b => (
             <Square
-              onMouseEnter={() => console.log("hi")}
+              onMouseEnter={() => setCurrentHoveringCol(b.coordinate.col)}
               key={b.coordinate.row.toString() + b.coordinate.col}
               coordinate={b.coordinate.row.toString() + b.coordinate.col}
             />

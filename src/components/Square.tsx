@@ -7,12 +7,13 @@ interface SquareProps
   > {
   coordinate: string;
   isPlaceholder?: boolean;
-  // List your props here
+  showPlaceholder?: boolean;
 }
 
 const Square: React.FC<SquareProps> = ({
   coordinate,
   isPlaceholder,
+  showPlaceholder,
   ...props
 }) => {
   return (
@@ -23,11 +24,15 @@ const Square: React.FC<SquareProps> = ({
       )}
       {...props}
     >
-      {!isPlaceholder && (
-        <div className="rounded-full bg-white w-16 h-16 flex justify-center items-center">
-          {coordinate}
-        </div>
-      )}
+      <div
+        className={cn(
+          "rounded-full bg-white w-16 h-16 flex justify-center items-center",
+          isPlaceholder && "invisible",
+          showPlaceholder && "visible bg-red-800",
+        )}
+      >
+        {coordinate}
+      </div>
     </div>
   );
 };
