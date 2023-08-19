@@ -2,7 +2,7 @@ import { useState } from "react";
 import useBoard from "../store";
 import Square from "./Square";
 
-const Board: React.FC<BoardProps> = () => {
+const Board: React.FC = () => {
   const board = useBoard(state => state.board);
   const placeCircle = useBoard(state => state.placeCircle);
   const board1D = board.flat();
