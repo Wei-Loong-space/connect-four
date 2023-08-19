@@ -13,6 +13,7 @@ type Store = {
   board: Board[][];
   placeCircle: (selectedCol: number, isOpponent?: boolean) => void;
   turn: "player" | "computer" | "transition";
+  lastSelection?: number;
 };
 
 const INIT_BOARD: Board[][] = [...Array(6).keys()].map((_, i) => {
@@ -36,9 +37,9 @@ const useBoard = create<Store>(
           .filter(b => b.coordinate.col === selectedCol)
           .map(b => b.player);
         const currentPosition = colStatus.filter(p => p === "none").length - 1;
-
         return {
           ...state,
+          lastSelection: selectedCol,
           turn: isOpponent ? "player" : "transition",
           board: state.board.map(row => {
             return row.map(col => {
