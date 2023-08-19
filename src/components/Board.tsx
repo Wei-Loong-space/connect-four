@@ -4,13 +4,12 @@ import Square from "./Square";
 
 const Board: React.FC<BoardProps> = () => {
   const board = useBoard(state => state.board);
-
+  const placeCircle = useBoard(state => state.placeCircle);
   const board1D = board.flat();
   const placeholder = [...Array(7).keys()];
   const [currentHoveringCol, setCurrentHoveringCol] = useState<number | null>(
     null,
   );
-  console.log(currentHoveringCol);
   return (
     <div className="container mx-auto">
       <div
@@ -28,6 +27,10 @@ const Board: React.FC<BoardProps> = () => {
           ))}
           {board1D.map(b => (
             <Square
+              fill={b.player}
+              onClick={() => {
+                placeCircle(b.coordinate.col);
+              }}
               onMouseEnter={() => setCurrentHoveringCol(b.coordinate.col)}
               key={b.coordinate.row.toString() + b.coordinate.col}
               coordinate={b.coordinate.row.toString() + b.coordinate.col}

@@ -8,27 +8,30 @@ interface SquareProps
   coordinate: string;
   isPlaceholder?: boolean;
   showPlaceholder?: boolean;
+  fill?: "player" | "none" | "computer";
 }
 
 const Square: React.FC<SquareProps> = ({
   coordinate,
   isPlaceholder,
   showPlaceholder,
+  fill,
   ...props
 }) => {
   return (
     <div
       className={cn(
-        "w-full h-full border-red bg-blue-600 flex justify-center items-center",
+        "w-full h-full border-red bg-blue-600 flex justify-center items-center cursor-pointer",
         isPlaceholder && "bg-blue-700",
       )}
       {...props}
     >
       <div
         className={cn(
-          "rounded-full bg-white w-16 h-16 flex justify-center items-center",
+          "rounded-full bg-white w-16 h-16 flex justify-center items-center ",
           isPlaceholder && "invisible",
           showPlaceholder && "visible bg-red-800",
+          fill === "player" && "bg-red-800",
         )}
       >
         {coordinate}
