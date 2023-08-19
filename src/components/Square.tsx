@@ -9,12 +9,14 @@ interface SquareProps
   isPlaceholder?: boolean;
   showPlaceholder?: boolean;
   fill?: "player" | "none" | "computer";
+  isTransitioning?: boolean;
 }
 
 const Square: React.FC<SquareProps> = ({
   coordinate,
   isPlaceholder,
   showPlaceholder,
+  isTransitioning,
   fill,
   ...props
 }) => {
@@ -23,6 +25,7 @@ const Square: React.FC<SquareProps> = ({
       className={cn(
         "w-full h-full border-red bg-blue-600 flex justify-center items-center cursor-pointer",
         isPlaceholder && "bg-blue-700",
+        isTransitioning && "cursor-wait",
       )}
       {...props}
     >
@@ -37,6 +40,7 @@ const Square: React.FC<SquareProps> = ({
           "rounded-full bg-white w-16 h-16 flex justify-center items-center ",
           isPlaceholder && "hidden",
           fill === "player" && "bg-red-800",
+          fill === "computer" && "bg-green-800",
         )}
       >
         {coordinate}

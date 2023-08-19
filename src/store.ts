@@ -9,11 +9,10 @@ export interface Board {
   player: "player" | "computer" | "none";
 }
 
-// Zustand implementation
-
 type Store = {
   board: Board[][];
-  placeCircle: (selectedCol: number) => void;
+  placeCircle: (selectedCol: number, isOpponent?: boolean) => void;
+  turn: "player" | "computer" | "transition";
 };
 
 const INIT_BOARD: Board[][] = [...Array(6).keys()].map((_, i) => {
@@ -29,23 +28,25 @@ const INIT_BOARD: Board[][] = [...Array(6).keys()].map((_, i) => {
 const useBoard = create<Store>(
   (set): Store => ({
     board: INIT_BOARD,
-    placeCircle: selectedCol =>
+    turn: "player",
+    placeCircle: (selectedCol, isOpponent) =>
       set(state => {
+        const colStatus = state.board
+          .flat()
+          .filter(b => b.coordinate.col === selectedCol)
+          .map(b => b.player);
+        const currentPosition = colStatus.filter(p => p === "none").length - 1;
+
         return {
           ...state,
+          turn: isOpponent ? "player" : "transition",
           board: state.board.map(row => {
             return row.map(col => {
               if (col.coordinate.col === selectedCol) {
-                const colStatus = state.board
-                  .flat()
-                  .filter(b => b.coordinate.col === selectedCol)
-                  .map(b => b.player);
-                const currentPosition =
-                  colStatus.filter(p => p === "none").length - 1;
                 if (col.coordinate.row === currentPosition) {
                   return {
                     ...col,
-                    player: "player",
+                    player: isOpponent ? "computer" : "player",
                   };
                 }
                 return col;
