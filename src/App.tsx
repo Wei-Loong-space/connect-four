@@ -1,11 +1,14 @@
-import { useState } from "react";
+import Board from "./components/Board";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <h1 className="text-red-100">hi</h1>
+      <div className="container-xl bg-bg-image h-screen bg-cover">
+        <h1 className="text-center text-[64px] font-bold py-2 text-white">
+          Connect Four
+        </h1>
+        <Board />
+      </div>
     </>
   );
 }
