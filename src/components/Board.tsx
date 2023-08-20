@@ -33,26 +33,17 @@ const Board: React.FC = () => {
         onMouseLeave={() => setCurrentHoveringCol(null)}
         className="bg-blue-700 pb-0 pt-2 px-2 w-max m-auto rounded-2xl overflow-auto"
       >
-        {!isGameEnded && (
-          <h2 className="text-white text-2xl text-center font-bold">
-            Turn : {turn === "transition" ? "Computer" : "Player"}
-          </h2>
-        )}
-        {isPlayerWon && (
-          <h2 className="text-white text-center text-2xl font-bold">
-            Player Won
-          </h2>
-        )}
-        {isOpponentWon && (
-          <h2 className="text-center text-white text-2xl font-bold">
-            Computer Won
-          </h2>
-        )}
+        <h2 className="text-center text-white text-2xl font-bold">
+          {(() => {
+            if (isOpponentWon) return "Computer Won";
+            if (isPlayerWon) return "Player Won";
+            return `Turn : ${turn === "transition" ? "Computer" : "Player"}`;
+          })()}
+        </h2>
         <div className="grid justify-center grid-cols-[repeat(7,80px)] grid-rows-[repeat(6,72px)] gap-0 ">
           {placeholder.map(colLabel => (
             <Square
               key={colLabel}
-              coordinate={colLabel.toString()}
               isPlaceholder
               showPlaceholder={currentHoveringCol === colLabel && !isGameEnded}
             />
@@ -68,7 +59,6 @@ const Board: React.FC = () => {
               }}
               onMouseEnter={() => setCurrentHoveringCol(b.coordinate.col)}
               key={b.coordinate.row.toString() + b.coordinate.col}
-              coordinate={b.coordinate.row.toString() + b.coordinate.col}
             />
           ))}
         </div>
