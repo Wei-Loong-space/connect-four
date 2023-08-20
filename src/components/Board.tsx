@@ -7,6 +7,7 @@ const Board: React.FC = () => {
   const board = useBoard(state => state.board);
   const placeCircle = useBoard(state => state.placeCircle);
   const turn = useBoard(state => state.turn);
+  const restart = useBoard(state => state.restart);
 
   const board1D = board.flat();
   const placeholder = [...Array(7).keys()];
@@ -33,13 +34,22 @@ const Board: React.FC = () => {
         onMouseLeave={() => setCurrentHoveringCol(null)}
         className="bg-blue-700 pb-0 pt-2 px-2 w-max m-auto rounded-2xl overflow-auto"
       >
-        <h2 className="text-center text-white text-2xl font-bold">
-          {(() => {
-            if (isOpponentWon) return "Computer Won";
-            if (isPlayerWon) return "Player Won";
-            return `Turn : ${turn === "transition" ? "Computer" : "Player"}`;
-          })()}
-        </h2>
+        <div className="flex justify-between px-4">
+          <h2 className="text-center text-white text-2xl font-bold">
+            {(() => {
+              if (isOpponentWon) return "Computer Won";
+              if (isPlayerWon) return "Player Won";
+              return `Turn : ${turn === "transition" ? "Computer" : "Player"}`;
+            })()}
+          </h2>
+          <button
+            onClick={restart}
+            className="block rounded-lg text-white border p-2 hover:bg-blue-800"
+          >
+            Restart Game
+          </button>
+        </div>
+
         <div className="grid justify-center grid-cols-[repeat(7,80px)] grid-rows-[repeat(6,72px)] gap-0 ">
           {placeholder.map(colLabel => (
             <Square

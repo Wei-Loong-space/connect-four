@@ -16,6 +16,7 @@ const Square: React.FC<SquareProps> = ({
   showPlaceholder,
   isTransitioning,
   fill,
+  className,
   ...props
 }) => {
   return (
@@ -24,6 +25,7 @@ const Square: React.FC<SquareProps> = ({
         "w-full h-full border-red bg-blue-600 flex justify-center items-center cursor-pointer",
         isPlaceholder && "bg-blue-700",
         isTransitioning && "cursor-wait",
+        className,
       )}
       {...props}
     >

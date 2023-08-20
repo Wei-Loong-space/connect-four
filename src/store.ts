@@ -14,6 +14,7 @@ type Store = {
   placeCircle: (selectedCol: number, isOpponent?: boolean) => void;
   turn: "player" | "computer" | "transition";
   lastSelection?: number;
+  restart: () => void;
 };
 
 const INIT_BOARD: Board[][] = [...Array(6).keys()].map((_, i) => {
@@ -30,6 +31,13 @@ const useBoard = create<Store>(
   (set): Store => ({
     board: INIT_BOARD,
     turn: "player",
+    restart: () =>
+      set(state => ({
+        ...state,
+        board: INIT_BOARD,
+        lastSelection: undefined,
+        turn: "player",
+      })),
     placeCircle: (selectedCol, isOpponent) =>
       set(state => {
         const colStatus = state.board
